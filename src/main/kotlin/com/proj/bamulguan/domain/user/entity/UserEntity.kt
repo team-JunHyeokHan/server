@@ -1,4 +1,4 @@
-package com.proj.bamulguan.domain.user
+package com.proj.bamulguan.domain.user.entity
 
 import com.proj.bamulguan.global.commoon.entity.BasTimeEntity
 import jakarta.persistence.*

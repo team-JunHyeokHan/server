@@ -1,5 +1,7 @@
-package com.proj.bamulguan.domain.user
+package com.proj.bamulguan.domain.user.controller
 
+import com.proj.bamulguan.domain.user.dto.UserReq
+import com.proj.bamulguan.domain.user.service.UserService
 import com.proj.bamulguan.global.response.BaseResponse
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -12,8 +14,8 @@ class UserController(
     private val userService: UserService
 ) {
     @PostMapping
-    fun addToken(@RequestBody token:String): BaseResponse{
-        userService.addToken(token)
+    fun addToken(@RequestBody userReq: UserReq): BaseResponse{
+        userService.addToken(userReq)
         return BaseResponse.created("성공")
     }
 }

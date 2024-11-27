@@ -16,7 +16,6 @@ import java.net.http.HttpClient
 @RequestMapping("/post")
 class BoardController (
     private val boardService: BoardService,
-
 ){
 
     @PostMapping

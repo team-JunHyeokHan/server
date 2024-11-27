@@ -1,8 +1,8 @@
 package com.proj.bamulguan
 
-import com.proj.bamulguan.domain.user.UserEntity
-import com.proj.bamulguan.domain.user.UserRepository
-import com.proj.bamulguan.domain.user.UserService
+import com.proj.bamulguan.domain.user.entity.UserEntity
+import com.proj.bamulguan.domain.user.repository.UserRepository
+import com.proj.bamulguan.domain.user.service.UserService
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
