@@ -1,5 +1,6 @@
 package com.proj.bamulguan.domain.board.entity
 
+import com.proj.bamulguan.domain.file.entity.FileEntity
 import com.proj.bamulguan.global.commoon.entity.BasTimeEntity
 import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
@@ -18,6 +19,7 @@ data class BoardEntity(
     val content: String?,
 
     @Column()
-    val image: String?
+    @OneToMany(cascade = arrayOf(CascadeType.ALL), orphanRemoval = true)
+    val image: List<FileEntity>?
 
     ) : BasTimeEntity()

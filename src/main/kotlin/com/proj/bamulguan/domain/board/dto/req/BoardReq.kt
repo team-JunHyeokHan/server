@@ -8,5 +8,5 @@ data class BoardReq (
 
     val content: String?,
 
-    val imageUrl: String?
+    val files: List<Long>?
 )
