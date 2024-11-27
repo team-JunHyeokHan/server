@@ -16,8 +16,7 @@ import java.net.http.HttpClient
 @RequestMapping("/post")
 class BoardController (
     private val boardService: BoardService,
-    private val s3Service: S3Service,
-    private val fileService: FileService
+
 ){
 
     @PostMapping
@@ -29,16 +28,6 @@ class BoardController (
     @GetMapping
     fun get(): BaseResponseData<MutableList<BoardRes>>{
         return BaseResponseData.ok("성공", boardService.get())
-    }
-
-    @PostMapping("/file")
-    fun upload(@RequestPart files: List<MultipartFile>): BaseResponseData<List<FileDto>> {
-        val boards: MutableList<FileDto> = ArrayList()
-        for (multipartFile in files) {
-            val file = s3Service.upload(multipartFile, "밤물관")
-            boards.add(fileService.save(file))
-        }
-        return BaseResponseData.ok("성공", boards)
     }
 
 }

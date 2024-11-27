@@ -20,14 +20,12 @@ class BoardService(
 ){
     fun upload(boardReq: BoardReq) {
         val files = fileRepository.findAllById(boardReq.files ?: emptyList())
-
         boardRepository.save(
             BoardMapper.toEntity(
                 boardReq,
                 files
             )
         )
-
         fcmConfig.sendByTokenList("새로운 작품이 올라왔어요!", boardReq.title)
     }
 
