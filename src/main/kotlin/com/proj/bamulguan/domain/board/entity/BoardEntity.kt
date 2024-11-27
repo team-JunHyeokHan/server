@@ -15,7 +15,9 @@ data class BoardEntity(
     @get:NotNull
     val title: String,
 
-    @get:NotNull
-    val content: String,
+    val content: String?,
+
+    @Column()
+    val image: String?
 
     ) : BasTimeEntity()

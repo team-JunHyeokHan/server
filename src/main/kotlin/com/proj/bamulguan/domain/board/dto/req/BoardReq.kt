@@ -5,6 +5,8 @@ import org.jetbrains.annotations.NotNull
 data class BoardReq (
     @NotNull
     val title: String,
-    @NotNull
-    val content: String
+
+    val content: String?,
+
+    val imageUrl: String?
 )

@@ -12,7 +12,8 @@ class BoardMapper {
                 BoardEntity(
                     id = null,
                     title = boardReq.title,
-                    content = boardReq.content
+                    content = boardReq.content,
+                    image = boardReq.imageUrl
                 )
             }
         }
@@ -21,8 +22,9 @@ class BoardMapper {
             return BoardRes(
                 id = boardEntity.id,
                 title = boardEntity.title,
-                content = boardEntity.content
-            )
+                content = boardEntity.content,
+                imageUrl = boardEntity.image
+                )
         }
 
     }
