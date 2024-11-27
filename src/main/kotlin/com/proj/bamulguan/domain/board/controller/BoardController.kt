@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile
 import java.net.http.HttpClient
 
 @RestController
-@RequestMapping("/post")
+@RequestMapping("/board")
 class BoardController (
     private val boardService: BoardService,
 ){
