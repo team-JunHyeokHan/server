@@ -38,6 +38,8 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     implementation ("org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE")
+    implementation ("com.google.firebase:firebase-admin:9.2.0")
+
 }
 
 kotlin {

@@ -1,23 +1,17 @@
-package com.proj.bamulguan.domain.board.entity
+package com.proj.bamulguan.domain.user
 
 import com.proj.bamulguan.global.commoon.entity.BasTimeEntity
 import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
 
 @Entity
-data class BoardEntity(
-
+data class UserEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id")
+    @Column(name = "user_id")
     val id: Long?,
 
     @get:NotNull
-    val title: String,
+    val fcmToken: String
 
-    val content: String?,
-
-    @Column()
-    val image: String?
-
-    ) : BasTimeEntity()
+) : BasTimeEntity()
