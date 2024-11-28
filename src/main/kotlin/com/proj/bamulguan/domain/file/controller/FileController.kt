@@ -17,7 +17,7 @@ class FileController(
     private val fileService: FileService
 ) {
 
-    @PostMapping("/file")
+    @PostMapping()
     fun upload(@RequestPart files: List<MultipartFile>): BaseResponseData<List<FileDto>> {
         val boards: MutableList<FileDto> = ArrayList()
         for (multipartFile in files) {
