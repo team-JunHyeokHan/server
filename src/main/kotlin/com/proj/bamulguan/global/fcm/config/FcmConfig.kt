@@ -5,17 +5,19 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.FirebaseOptions
 import com.google.firebase.messaging.BatchResponse
 import com.google.firebase.messaging.FirebaseMessaging
-import com.google.firebase.messaging.Message
+import com.google.firebase.messaging.MulticastMessage
 import com.google.firebase.messaging.Notification
 import com.proj.bamulguan.domain.user.repository.UserRepository
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.ClassPathResource
 import org.springframework.scheduling.annotation.Async
-import java.time.LocalDateTime
+import org.springframework.scheduling.annotation.EnableAsync
 import java.util.concurrent.ExecutionException
 
+
 @Configuration
+@EnableAsync
 class FcmConfig(
     private val userRepository: UserRepository
 ) {
@@ -26,15 +28,17 @@ class FcmConfig(
     @Value("\${fcm.key.scope}")
     lateinit var FCM_SCOPE: String
 
-    fun init(){
+    fun init() {
         val options: FirebaseOptions = FirebaseOptions.Builder()
             .setCredentials(
                 GoogleCredentials
-                    .fromStream(ClassPathResource(FCM_PRIVATE_KEY_PATH).inputStream)//keyPath의 글 inputStream으로 인증정보 확인, inputStream으로 키 파일 불러오기
-                    .createScoped(listOf(FCM_SCOPE)))//Firebase Cloud Messaging(Firebase Scope)을 설정
+                    .fromStream(ClassPathResource(FCM_PRIVATE_KEY_PATH).inputStream) // keyPath의 inputStream으로 인증정보 확인
+                    .createScoped(listOf(FCM_SCOPE)) // Firebase Cloud Messaging(Firebase Scope)을 설정
+            )
             .build()
-        if (FirebaseApp.getApps().isEmpty()){ //FirebaseApp.getApps()를 사용하여 이미 초기화된 앱이 있는지 확인
-            FirebaseApp.initializeApp(options) //초기화된 앱이 없으면 FirebaseApp.initializeApp(options)를 호출하여 앱을 초기화
+
+        if (FirebaseApp.getApps().isEmpty()) {
+            FirebaseApp.initializeApp(options)
         }
     }
 
@@ -54,29 +58,25 @@ class FcmConfig(
     }
 
     fun sendBatchMessages(fcmTokenList: List<String>, title: String, body: String) {
-        val messages = fcmTokenList.map { token ->
-            require(!token.isNullOrEmpty())
-
-            Message.builder()
-                .putData("time", LocalDateTime.now().toString())
-                .setNotification(
-                    Notification.builder()  // builder 패턴을 사용하여 Notification 객체 생성
-                        .setTitle(title)
-                        .setBody(body)
-                        .build()  // build() 메서드로 최종 Notification 객체 생성
-                )
-                .setToken(token)
+        val message = MulticastMessage.builder()
+            .setNotification(
+                Notification.builder()
+                .setTitle(title)
+                .setBody(body)
                 .build()
-        }.filterNotNull()
+            )
+            .addAllTokens(fcmTokenList)
+            .build()
 
-        try {
-            val response = FirebaseMessaging.getInstance().sendAllAsync(messages).get()
-            handleResponse(response, fcmTokenList)
-        } catch (e: ExecutionException) {
-            throw RuntimeException(e)
-        } catch (e: InterruptedException) {
-            throw RuntimeException(e)
-        }
+            try {
+                val response = FirebaseMessaging.getInstance().sendEachForMulticast(message);
+                handleResponse(response, fcmTokenList)
+            } catch (e: ExecutionException) {
+                throw RuntimeException(e)
+            } catch (e: InterruptedException) {
+                Thread.currentThread().interrupt()
+                throw RuntimeException(e)
+            }
     }
 
     private fun handleResponse(response: BatchResponse, fcmTokenList: List<String>) {
@@ -91,5 +91,4 @@ class FcmConfig(
             }
         }
     }
-
 }

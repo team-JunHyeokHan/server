@@ -5,11 +5,8 @@ import com.proj.bamulguan.domain.board.dto.req.BoardReq
 import com.proj.bamulguan.domain.board.dto.res.BoardRes
 import com.proj.bamulguan.domain.board.entity.BoardEntity
 import com.proj.bamulguan.domain.board.repository.BoardRepository
-import com.proj.bamulguan.domain.file.entity.FileEntity
 import com.proj.bamulguan.domain.file.repository.FileRepository
-import com.proj.bamulguan.domain.file.service.FileService
 import com.proj.bamulguan.global.fcm.config.FcmConfig
-import lombok.RequiredArgsConstructor
 import org.springframework.stereotype.Service
 
 @Service

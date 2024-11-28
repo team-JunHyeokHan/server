@@ -1,5 +1,6 @@
 package com.proj.bamulguan.domain.file.entity
 
+import com.proj.bamulguan.domain.board.entity.BoardEntity
 import jakarta.persistence.*
 import org.jetbrains.annotations.NotNull
 
